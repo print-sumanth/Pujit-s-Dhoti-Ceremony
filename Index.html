@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+<title>Dhoti Ceremony Invitation</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(180deg, #5c0a0a, #1a1a1a);
+  color: white;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: 48px;
+}
+
+.telugu {
+  font-family: 'Noto Serif Telugu', serif;
+  color: gold;
+  font-size: 24px;
+}
+
+/* CARDS */
+.card {
+  backdrop-filter: blur(15px);
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* BUTTON */
+.btn {
+  background: gold;
+  color: black;
+  padding: 12px 20px;
+  border-radius: 25px;
+  margin-top: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* FLOATING BUTTON */
+.floating {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #111;
+  padding: 20px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 350px;
+}
+
+/* INPUTS */
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: none;
+}
+
+/* FADE */
+.fade {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 1s;
+}
+
+.fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* COUNTDOWN */
+.countdown {
+  font-size: 22px;
+  color: gold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero fade">
+  <div class="telugu">🙏 శుభలేఖ 🙏</div>
+  <h1>Dhoti Ceremony</h1>
+  <p>Kunduru Saipujit Reddy</p>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="card fade">
+  <div id="countdown" class="countdown"></div>
+</div>
+
+<!-- EVENT DETAILS -->
+<div class="card fade">
+  <p><b>Date:</b> April 10, 2026</p>
+  <p><b>Time:</b> 7:00 PM</p>
+  <p><b>Venue:</b> Lonestar Ranch Club House</p>
+  <p>Frisco, TX</p>
+</div>
+
+<!-- MESSAGE -->
+<div class="card fade">
+  <p>
+    With the blessings of Lord Ganesha, we invite you to celebrate this
+    auspicious occasion with us.
+  </p>
+</div>
+
+<!-- RSVP BUTTON -->
+<div class="floating">
+  <div class="btn" onclick="openModal()">RSVP</div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h3>RSVP</h3>
+
+    <input id="name" placeholder="Full Name">
+    <input id="phone" placeholder="Phone Number">
+
+    <input id="adults" type="number" placeholder="Number of Adults" oninput="calculateTotal()">
+    <input id="kids" type="number" placeholder="Number of Kids" oninput="calculateTotal()">
+
+    <input id="total" placeholder="Total Guests" readonly>
+
+    <!-- FOOD PREFERENCE -->
+    <select id="food">
+      <option value="">Food Preference</option>
+      <option>Veg</option>
+      <option>Non-Veg</option>
+      <option>Vegan</option>
+      <option>Jain</option>
+    </select>
+
+    <!-- ATTENDING -->
+    <select id="attending">
+      <option value="Yes">Will Attend</option>
+      <option value="No">Not Attend</option>
+    </select>
+
+    <textarea id="message" placeholder="Message (optional)"></textarea>
+
+    <div class="btn" onclick="submitForm()">Submit</div>
+    <div class="btn" onclick="closeModal()">Close</div>
+  </div>
+</div>
+
+<script>
+// COUNTDOWN
+var target = new Date("April 10, 2026 19:00:00").getTime();
+
+setInterval(function() {
+  var now = new Date().getTime();
+  var diff = target - now;
+
+  var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+
+  document.getElementById("countdown").innerHTML =
+    days + " Days " + hours + " Hours Remaining";
+}, 1000);
+
+// MODAL
+function openModal(){
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+}
+
+// FADE ANIMATION
+window.onload = () => {
+  document.querySelectorAll(".fade").forEach((el, i) => {
+    setTimeout(() => el.classList.add("show"), i * 200);
+  });
+};
+
+// CALCULATE TOTAL
+function calculateTotal() {
+  let adults = parseInt(document.getElementById("adults").value) || 0;
+  let kids = parseInt(document.getElementById("kids").value) || 0;
+
+  document.getElementById("total").value = adults + kids;
+}
+
+// SUBMIT FUNCTION (CONNECT BACKEND HERE)
+function submitForm(){
+  const data = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    adults: document.getElementById("adults").value,
+    kids: document.getElementById("kids").value,
+    total: document.getElementById("total").value,
+    food: document.getElementById("food").value,
+    attending: document.getElementById("attending").value,
+    message: document.getElementById("message").value
+  };
+
+  console.log(data);
+
+  alert("🙏 Thank you! RSVP submitted");
+}
+</script>
+
+</body>
+</html>
