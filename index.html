@@ -238,22 +238,17 @@ function submitForm(){
 
   fetch("https://script.google.com/macros/s/AKfycbye4YZY_3DyXm5VtduirqFkbmcu_HgSD1fmR1WXb6-iV4SG4LyGYd9IAfU73d90NZMK0w/exec", {
     method: "POST",
+    mode: "no-cors",   // 🔥 IMPORTANT FIX
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
-  })
-  .then(res => res.text())
-  .then(response => {
-    console.log("Success:", response);
-    alert("🙏 Thank you! RSVP saved");
-    closeModal();
-  })
-  .catch(error => {
-    console.error("Error:", error);
-    alert("❌ Error submitting form");
   });
+
+  alert("🙏 Thank you! RSVP submitted");
+  closeModal();
 }
+
 </script>
 
 </body>
