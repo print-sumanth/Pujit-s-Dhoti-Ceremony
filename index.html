@@ -238,17 +238,13 @@ function submitForm(){
 
   fetch("https://script.google.com/macros/s/AKfycbye4YZY_3DyXm5VtduirqFkbmcu_HgSD1fmR1WXb6-iV4SG4LyGYd9IAfU73d90NZMK0w/exec", {
     method: "POST",
-    mode: "no-cors",   // 🔥 IMPORTANT FIX
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
+    mode: "no-cors",   // keep this
+    body: JSON.stringify(data)  // 🔥 REMOVE headers
   });
 
   alert("🙏 Thank you! RSVP submitted");
   closeModal();
 }
-
 </script>
 
 </body>
