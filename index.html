@@ -236,9 +236,23 @@ function submitForm(){
     message: document.getElementById("message").value
   };
 
-  console.log(data);
-
-  alert("🙏 Thank you! RSVP submitted");
+  fetch("https://docs.google.com/spreadsheets/d/1MTpoSszVQHj_KGfTLbSEAlnf431-cLYqiqRC7H4rgBE/edit?usp=sharing", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.text())
+  .then(response => {
+    console.log("Success:", response);
+    alert("🙏 Thank you! RSVP saved");
+    closeModal();
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("❌ Error submitting form");
+  });
 }
 </script>
 
