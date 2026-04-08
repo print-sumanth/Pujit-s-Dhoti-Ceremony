@@ -225,21 +225,21 @@ function calculateTotal() {
 
 // SUBMIT FUNCTION (CONNECT BACKEND HERE)
 function submitForm(){
-  const data = {
-    name: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
-    adults: document.getElementById("adults").value,
-    kids: document.getElementById("kids").value,
-    total: document.getElementById("total").value,
-    food: document.getElementById("food").value,
-    attending: document.getElementById("attending").value,
-    message: document.getElementById("message").value
-  };
+  const formData = new FormData();
+
+  formData.append("name", document.getElementById("name").value);
+  formData.append("phone", document.getElementById("phone").value);
+  formData.append("adults", document.getElementById("adults").value);
+  formData.append("kids", document.getElementById("kids").value);
+  formData.append("total", document.getElementById("total").value);
+  formData.append("food", document.getElementById("food").value);
+  formData.append("attending", document.getElementById("attending").value);
+  formData.append("message", document.getElementById("message").value);
 
   fetch("https://script.google.com/macros/s/AKfycbye4YZY_3DyXm5VtduirqFkbmcu_HgSD1fmR1WXb6-iV4SG4LyGYd9IAfU73d90NZMK0w/exec", {
     method: "POST",
-    mode: "no-cors",   // keep this
-    body: JSON.stringify(data)  // 🔥 REMOVE headers
+    mode: "no-cors",
+    body: formData
   });
 
   alert("🙏 Thank you! RSVP submitted");
